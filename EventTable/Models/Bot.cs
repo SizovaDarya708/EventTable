@@ -20,6 +20,7 @@ namespace EventTable.Models
             }
 
             commandsList = new List<Command>();
+            //Регистрация комманд
             commandsList.Add(new HelloCommand());
             //TODO: Add more commands
 
@@ -29,5 +30,6 @@ namespace EventTable.Models
 
             return client;
         }
+
     }
 }
