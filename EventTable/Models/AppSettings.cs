@@ -10,7 +10,7 @@ namespace EventTable.Models
     /// </summary>
     public static class AppSettings
     {
-        public static string Url { get; set; } = "https://localhost:44373/{0}";
+        public static string Url { get; set; } = "https://git.heroku.com/eventtable.git";
 
         public static string Name { get; set; } = "EventTablebot";
 
