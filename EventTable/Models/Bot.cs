@@ -1,11 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using EventTable.Models.Commands;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Telegram.Bot;
-using EventTable.Models.Commands;
+using Telegram.Bot.Args;
+using Telegram.Bot.Types;
+using Telegram.Bot.Types.Enums;
 
 namespace EventTable.Models
 {
-    public static class Bot
+    public class Bot
     {
         private static TelegramBotClient client;
         private static List<Command> commandsList;
@@ -25,11 +29,26 @@ namespace EventTable.Models
             //TODO: Add more commands
 
             client = new TelegramBotClient(AppSettings.Key);
+            client.OnMessage += BotOnMessageReceived;
+            client.OnMessageEdited += BotOnMessageReceived;
+            client.StartReceiving();
+            Console.ReadLine();
+            client.StopReceiving();
+
+            client = new TelegramBotClient(AppSettings.Key);
             var hook = string.Format(AppSettings.Url, "api/message/update");
             await client.SetWebhookAsync(hook);
 
             return client;
-        }
 
+            async void BotOnMessageReceived(object sender, MessageEventArgs messageEventArgs)
+            {
+                var message = messageEventArgs.Message;
+                if (message?.Type == MessageType.Text)
+                {
+                    await client.SendTextMessageAsync(message.Chat.Id, message.Text);
+                }
+            }
+        }
     }
 }
