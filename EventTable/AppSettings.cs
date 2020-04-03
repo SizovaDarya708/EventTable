@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Text;
 
-namespace EventTable.Models
+namespace EventTable
 {
-    /// <summary>
-    /// Класс, содержащий конфигурации бота
-    /// </summary>
     public static class AppSettings
     {
         public static string Url { get; set; } = "https://git.heroku.com/eventtable.git";
