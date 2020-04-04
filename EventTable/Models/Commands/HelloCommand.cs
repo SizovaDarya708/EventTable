@@ -11,8 +11,9 @@ namespace EventTable.Models.Commands
     /// </summary>
     public class HelloCommand : Command
     {
-        public override string Name => "hello";
-
+        //способы обращения пользователю к боту для вызова функции
+        public override List<string> Name => new List<string>() {"Hello", "hello" };
+        //Для выолнения не забудь зарегистрировать свой класс в Bot.cs
         public override void Execute(Message message, TelegramBotClient client)
         {
             var chatId = message.Chat.Id;
@@ -20,7 +21,7 @@ namespace EventTable.Models.Commands
 
             //Здесь прописывается вся логика, функционал, работа с сервисами и т.д.
 
-            client.SendTextMessageAsync(chatId, "Hello!", replyToMessageId: messageId);
+            client.SendTextMessageAsync(chatId, "Hello!");
         }
     }
 }

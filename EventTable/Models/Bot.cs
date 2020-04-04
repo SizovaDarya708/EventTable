@@ -24,6 +24,7 @@ namespace EventTable.Models
             commandsList = new List<Command>();
             //Регистрация комманд
             commandsList.Add(new HelloCommand());
+            commandsList.Add(new MenuCommand());
             //TODO: Add more commands
 
             if (client != null)
