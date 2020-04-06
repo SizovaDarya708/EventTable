@@ -4,6 +4,7 @@ using System;
 using System.Net.Http;
 using Telegram.Bot;
 using Telegram.Bot.Args;
+using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 
 namespace EventTable
@@ -14,11 +15,7 @@ namespace EventTable
 		static void Main(string[] args)
 		{
 			client = Bot.Get();
-			//client.StartReceiving();
-
 			var commands = Bot.Commands;
-			//var lastMessageId = 0;
-			//var message = client.GetUpdatesAsync().Result;
 
 			try
 			{
@@ -28,15 +25,14 @@ namespace EventTable
 					// получаем массив обновлений
 					var updates = client.GetUpdatesAsync(offset).Result;
 					client.SetWebhookAsync("");
-
+					//Перебор полученных обновлений
 					foreach (var update in updates)
 					{
 						foreach (var command in commands)
 						{
 							//Здесь идет сопоставление пришедших комманд с существующими 
 							//Происходит их выполнение
-
-							if (command.Name.Contains(update.Message.Text))
+							if (command.Name.Contains(update.Message.Text) || command.Name.Contains(update.CallbackQuery.Data))
 							{
 								command.Execute(update.Message, client);
 								break;
@@ -44,27 +40,7 @@ namespace EventTable
 						}
 						offset = update.Id + 1;
 					}
-
 				}
-				//if (message.Length > 0)
-				//{
-				//	var last = message[message.Length - 1];
-				//	if (lastMessageId != last.Id && last.Message != null)
-				//	{
-
-				//		foreach (var command in commands)
-				//		{
-				//			if (command.Name.Contains(last.Message.Text))
-				//			{
-				//				command.Execute(last.Message, client);
-				//				break;
-				//			}
-				//		}
-				//		lastMessageId = last.Id;
-				//		Console.ReadLine();
-				//		client.StopReceiving();
-				//	}
-				//}
 			}
 			catch (Exception e)
 			{
