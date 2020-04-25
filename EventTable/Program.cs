@@ -3,10 +3,8 @@ using MihaZupan;
 using System;
 using System.Net.Http;
 using Telegram.Bot;
-using Telegram.Bot.Args;
-using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
 using Npgsql;
+using EventTable.Helpers;
 
 namespace EventTable
 {
@@ -15,13 +13,10 @@ namespace EventTable
 		private static TelegramBotClient client;
 		static void Main(string[] args)
 		{
-			var cs = "Database=event_table;Host=localhost;Username=postgres;Password=8520;Persist Security Info=True";
-			using var con = new NpgsqlConnection(cs);
-			con.Open();
-			var sql = "SELECT version()";
-			using var cmd = new NpgsqlCommand(sql, con);
-			var version = cmd.ExecuteScalar().ToString();
-			Console.WriteLine($"PostgreSQL version: {version}");
+			DBConnection db = new DBConnection();
+			db.GetConnection();
+			Console.WriteLine($"PostgreSQL version: {db.Version}");
+
 			client = Bot.Get();
 			var commands = Bot.Commands;
 

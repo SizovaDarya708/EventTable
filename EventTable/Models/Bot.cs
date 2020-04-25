@@ -14,6 +14,9 @@ namespace EventTable.Models
 
         private static TelegramBotClient client;
 
+        /// <summary>
+        /// Список команд бота
+        /// </summary>
         private static List<Command> commandsList;
 
         public static TelegramBotClient Get()
@@ -25,6 +28,7 @@ namespace EventTable.Models
             //Регистрация комманд
             commandsList.Add(new HelloCommand());
             commandsList.Add(new MenuCommand());
+            commandsList.Add(new CreateNewEventCommand());
             //TODO: Add more commands
 
             if (client != null)
