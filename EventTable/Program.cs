@@ -13,9 +13,9 @@ namespace EventTable
 		private static TelegramBotClient client;
 		static void Main(string[] args)
 		{
-			DBConnection db = new DBConnection();
-			db.GetConnection();
-			Console.WriteLine($"PostgreSQL version: {db.Version}");
+			var connection = DataBaseHelper.GetConnection();
+			DataBaseHelper.AddUser("Albert", "Astrakhan");
+
 
 			client = Bot.Get();
 			var commands = Bot.Commands;

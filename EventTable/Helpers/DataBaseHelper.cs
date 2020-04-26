@@ -8,28 +8,39 @@ namespace EventTable.Helpers
     /// <summary>
     /// Подключение к базе данных
     /// </summary>
-    public class DBConnection
+    public class DataBaseHelper
     {
         /// <summary>
-        /// Установка соединения
+        /// Полуение соединения
         /// </summary>
-        public void GetConnection()
+        public static NpgsqlConnection GetConnection()
         {
             using var con = new NpgsqlConnection(AppSettings.DBConnection);
             con.Open();
-            var sql = "SELECT version()";
-            using var cmd = new NpgsqlCommand(sql, con);
-            Version = cmd.ExecuteScalar().ToString();
+            return con;
         }
+
         /// <summary>
-        /// Версия подключения
+        /// Метод, который добавляет пользователя
+        /// 1. Создать календарь
+        /// 2. Создать пользователя
         /// </summary>
-        public string Version { get; set; }
-    }
+        public static void AddUser(string login, string city)
+        {
+            var con = GetConnection();
+            string createCalendar = "INSERT INTO calendar(event_id, note_id) VALUES(null, null)";
+            using (NpgsqlCommand cmd = new NpgsqlCommand(createCalendar, con))
+            {
+                cmd.ExecuteNonQuery();
+            }
 
-    
-
-    class DataBaseHelper
-    {
+            string sqlCommand ="INSERT INTO usr(@login, @city) VALUES(@login, @city)";
+            using (NpgsqlCommand cmd = new NpgsqlCommand(sqlCommand, con))
+            {
+                cmd.Parameters.AddWithValue("login", login);
+                cmd.Parameters.AddWithValue("city", city);
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }
