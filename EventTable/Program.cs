@@ -5,6 +5,7 @@ using System.Net.Http;
 using Telegram.Bot;
 using Npgsql;
 using EventTable.Helpers;
+using EventTable.Models.Commands;
 
 namespace EventTable
 {
@@ -40,6 +41,7 @@ namespace EventTable
 								command.Execute(update.Message, client);
 								break;
 							}
+							//else(new DescriptionCommand().Execute(update.Message, client));
 						}
 						offset = update.Id + 1;
 					}

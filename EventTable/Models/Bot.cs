@@ -29,6 +29,7 @@ namespace EventTable.Models
             commandsList.Add(new HelloCommand());
             commandsList.Add(new MenuCommand());
             commandsList.Add(new CreateNewEventCommand());
+            commandsList.Add(new DescriptionCommand());
             //TODO: Add more commands
 
             if (client != null)
