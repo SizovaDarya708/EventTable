@@ -1,9 +1,6 @@
 ﻿using EventTable.Models;
-using MihaZupan;
 using System;
-using System.Net.Http;
 using Telegram.Bot;
-using Npgsql;
 using EventTable.Helpers;
 
 namespace EventTable
@@ -35,10 +32,14 @@ namespace EventTable
 						{
 							//Здесь идет сопоставление пришедших комманд с существующими 
 							//Происходит их выполнение
-							if (command.Name.Contains(update.Message.Text) || command.Name.Contains(update.CallbackQuery.Data))
+							if (command.Name.Contains(update.Message.Text))
 							{
 								command.Execute(update.Message, client);
 								break;
+							}
+							else if(update.Message != null && command.Name.Contains("Описание"))
+							{ 
+								command.Execute(update.Message, client); 
 							}
 						}
 						offset = update.Id + 1;
