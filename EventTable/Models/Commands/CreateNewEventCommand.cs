@@ -10,9 +10,9 @@ namespace EventTable.Models.Commands
     {
         public override List<string> Name => new List<string>() { "CreateEvent", "Создай новое событие", "создай новое событие" };
 
-        public override void Execute(Message message, TelegramBotClient client)
+        public override void Execute(Update update, TelegramBotClient client, Exception? e)
         {
-            var chatId = message.Chat.Id;
+            var chatId = update.Message.Chat.Id;
 
             client.SendTextMessageAsync(chatId, "Ну давай создадим новое событие", parseMode: default, false, false, 0);
 

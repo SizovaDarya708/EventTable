@@ -14,10 +14,9 @@ namespace EventTable.Models.Commands
     {
         public override List<string> Name => new List<string>() { "Меню", "Menu", "Главное меню" };
 
-        public override void Execute(Message message, TelegramBotClient client)
+        public override void Execute(Update update, TelegramBotClient client, Exception? e)
         {
-            var chatId = message.Chat.Id;
-            var messageId = message.MessageId;
+            var chatId = update.Message.Chat.Id;
 
             var menu = new InlineKeyboardMarkup(new[]
                             {

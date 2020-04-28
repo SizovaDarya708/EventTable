@@ -9,13 +9,13 @@ using Telegram.Bot.Types;
 namespace EventTable.Models.Commands
 {
     /// <summary>
-    /// Тут наверное лучше через интерфейс сделать, о вот так пока
+    /// Базовый класс команды
     /// </summary>
     public abstract class Command
     {
         public abstract List<string> Name { get; }
 
-        public abstract void Execute(Message message, TelegramBotClient client);
+        public abstract void Execute(Update update, TelegramBotClient client, Exception e = null );
 
         public bool Contains(string command)
         {
