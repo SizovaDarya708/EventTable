@@ -12,7 +12,7 @@ namespace EventTable.Models.Commands
     public class HelloCommand : Command
     {
         //способы обращения пользователю к боту для вызова функции
-        public override List<string> Name => new List<string>() {"Hello", "hello" };
+        public override List<string> Name => new List<string>() {"Hello", "hello", "Привет" };
         //Для выолнения не забудь зарегистрировать свой класс в Bot.cs
         public override void Execute(Message message, TelegramBotClient client)
         {
