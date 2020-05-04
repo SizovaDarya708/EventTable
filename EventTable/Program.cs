@@ -3,6 +3,7 @@ using System;
 using Telegram.Bot;
 using EventTable.Helpers;
 using System.Linq;
+using EventTable.Models.Entities;
 
 namespace EventTable
 {
@@ -11,10 +12,8 @@ namespace EventTable
 		private static TelegramBotClient client;
 		static void Main(string[] args)
 		{
-			//var connection = DataBaseHelper.GetConnection();
-			//DataBaseHelper.AddUser("Albert", "Astrakhan");
-
-
+			var connection = DataBaseHelper.GetConnection();
+			
 			client = Bot.Get();
 			var commands = Bot.Commands;
 
@@ -27,6 +26,12 @@ namespace EventTable
 				//Перебор полученных обновлений
 				foreach (var update in updates)
 				{
+					//if(тут проверка, что пользователя нет в бд)	
+					//{
+					//	User user = new User(update);
+					//	DataBaseHelper.AddUser(user);
+					//}
+
 					foreach (var command in commands)
 					{
 						//Здесь идет сопоставление пришедших комманд с существующими 
