@@ -61,7 +61,7 @@ namespace EventTable
 					offset = update.Id + 1;
 				}
 			}
-		}			
-		
+		}
+
 	}
 }

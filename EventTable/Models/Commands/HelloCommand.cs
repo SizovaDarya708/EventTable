@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 
@@ -19,8 +18,7 @@ namespace EventTable.Models.Commands
             var chatId = update.Message.Chat.Id;
 
             //Здесь прописывается вся логика, функционал, работа с сервисами и т.д.
-
-            client.SendTextMessageAsync(chatId, "Hello!");
+            client.SendTextMessageAsync(chatId, "Привет, странник", parseMode: default, false, false, 0);
         }
     }
 }

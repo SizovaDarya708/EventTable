@@ -22,7 +22,7 @@ namespace EventTable.Models.Commands
                             {
                                 new[] {InlineKeyboardButton.WithCallbackData("Список событий","EventList") },
                                 new[] {InlineKeyboardButton.WithCallbackData("Создание событий","CreateEvent") },
-                                new[] {InlineKeyboardButton.WithCallbackData("Администрирование событий","AdminMenu") }
+                                new[] {InlineKeyboardButton.WithCallbackData("Администрирование событий", "AdministrationMenu") }
                             });
 
             client.SendTextMessageAsync(chatId, "А вот и меню - получай", parseMode: default, false, false, 0, menu);
