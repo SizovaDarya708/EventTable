@@ -35,13 +35,15 @@ namespace EventTable
 					//	DataBaseHelper.AddUser(user);
 					//}
 
+					var userCommand = update.CallbackQuery?.Data ?? update.Message?.Text;
+
 					foreach (var command in commands)
 					{
 						//Здесь идет сопоставление пришедших комманд с существующими 
 						//Происходит их выполнение
 						try
 						{
-							if (command.Name.Contains(update.Message.Text))
+							if (command.Name.Contains(userCommand))
 							{
 								command.Execute(update, client);
 								break;
@@ -59,9 +61,9 @@ namespace EventTable
 						}
 					}
 					offset = update.Id + 1;
+
 				}
 			}
 		}
-
 	}
 }
