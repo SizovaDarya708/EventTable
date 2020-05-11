@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Telegram.Bot;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.Enums;
 
 namespace EventTable.Models.Commands
 {
@@ -12,12 +13,12 @@ namespace EventTable.Models.Commands
 
         public override void Execute(Update update, TelegramBotClient client, Exception? e)
         {
-            var chatId = update.Message.Chat.Id;
+            var Message = update.Message ?? update.CallbackQuery.Message;
 
-            client.SendTextMessageAsync(chatId, "Ну давай создадим новое событие", parseMode: default, false, false, 0);
+            client.SendTextMessageAsync(Message.Chat.Id, "Ну давай создадим новое событие", ParseMode.Html, false, false, 0);
 
-            client.SendTextMessageAsync(chatId, "Через двойной пробел укажите название мероприятия, " +
-                "дату <i>в формате ДД.ММ.ГГ<i>, описание, место проведения. \n Вот шаблон:\n " +
+            client.SendTextMessageAsync(Message.Chat.Id, "Через двойной пробел укажите название мероприятия, " +
+                "дату (в формате ДД.ММ.ГГ), описание, место проведения. \n Вот шаблон:\n " +
                 "Новый год!  01.01.21  ноовый год к нам мчится, скоооро...  ул.Добрый вечер",
                 parseMode: default, false, false, 0);
         }
