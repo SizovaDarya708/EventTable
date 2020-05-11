@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Net;
+using System.Runtime.CompilerServices;
 using System.Text;
+using EventTable.Data;
 using EventTable.Models.Entities;
 using Npgsql;
 
@@ -11,38 +16,173 @@ namespace EventTable.Helpers
     /// </summary>
     public class DataBaseHelper
     {
-        /// <summary>
-        /// Полуение соединения
-        /// </summary>
-        public static NpgsqlConnection GetConnection()
+        private ApplicationDbContext db { get; set; }
+
+        public DataBaseHelper()
         {
-            using var con = new NpgsqlConnection(AppSettings.DBConnection);
-            con.Open();
-            return con;
+            this.db = new ApplicationDbContext();
         }
 
         /// <summary>
-        /// Метод, который добавляет пользователя
-        /// 1. Создать календарь
-        /// 2. Создать пользователя
+        /// Добавление пользователя
         /// </summary>
-        public static void AddUser(User user)
+        public void AddUser(User user)
         {
-            var con = GetConnection();
-            string createCalendar = "INSERT INTO calendar(event_id, note_id) VALUES(null, null)";
-            using (NpgsqlCommand cmd = new NpgsqlCommand(createCalendar, con))
+            try 
             {
-                cmd.Parameters.AddWithValue("", "some_value");
-                cmd.ExecuteNonQuery();
+                if (!this.UserExist(user.ChatId))
+                {
+                    this.db.Add<User>(user);
+                    this.db.SaveChanges();
+                }
+                
             }
-
-            string sqlCommand ="INSERT INTO usr(@login, @id) VALUES(@login, @id)";
-            using (NpgsqlCommand cmd = new NpgsqlCommand(sqlCommand, con))
+            catch(Exception e) 
             {
-                //Арбуз, посмотри, можно ли так id добавлять
-                cmd.Parameters.AddWithValue("login", user.Login);
-                cmd.Parameters.AddWithValue("id", user.ChatId);
-                cmd.ExecuteNonQuery();
+                throw e;
+            }
+        }
+        /// <summary>
+        /// Получение User по chatId
+        /// </summary>
+        /// <param name="chatId"></param>
+        /// <returns></returns>
+        public User GetUser(int chatId)
+        {
+            try
+            {
+                return this.db.Users.Where(u => u.ChatId == chatId).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        /// <summary>
+        /// Проверка существования Пользователя 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public bool UserExist(int chatId)
+        {
+            try
+            {
+                var user = this.db.Users.FirstOrDefault(u => u.ChatId == chatId);
+                return user != null;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        /// <summary>
+        /// Добавление Event, определение владельца - автоматически
+        /// </summary>
+        /// <param name="event"></param>
+        /// <param name="chatId"></param>
+        public void AddEvent(Event @event, int chatId)
+        {
+            try
+            {
+                var user = this.GetUser(chatId);
+                //если нет ивента, то создатель - владелец
+                if (this.db.Find<Event>(@event) == null)
+                {
+                    this.db.Add<Event>(@event);
+                    this.db.Add<UserEvents>(new UserEvents() 
+                    {
+                        EventId = @event.Id,
+                        UserId = user.Id,
+                        IsOwner = 1 
+                    });
+                }
+                else
+                {
+                    this.db.Add<UserEvents>(new UserEvents()
+                    {
+                        EventId = @event.Id,
+                        UserId = user.Id,
+                        IsOwner = 0
+                    });
+                }
+                this.db.SaveChanges();
+            }
+            catch(Exception e)
+            {
+                throw e; 
+            }
+        }
+        /// <summary>
+        /// Получение списка всех мероприятий(1 - которые ораганизовал, 0 - на которые подписан)
+        /// </summary>
+        /// <param name="chatId"></param>
+        /// <param name="isOwner"></param>
+        /// <returns></returns>
+        public List<Event> GetUserEvents(int chatId, int isOwner)
+        {
+            try
+            {
+                var user = this.GetUser(chatId);
+                return this.db.UserEvents
+                .Where(ue => ue.UserId == user.Id && ue.IsOwner == isOwner)//или ChatId что тебе легче передавать? но если у тебя будет user, то пофиг
+                .Join(this.db.Events, ue => ue.EventId, e => e.Id,
+                (ue, ev) => new Event()
+                {
+                    Id = ev.Id,
+                    Description = ev.Description,
+                    Name = ev.Name,
+                    Place = ev.Name,
+                    Happen_date = ev.Happen_date,
+                    Notify_date = ev.Notify_date
+                }).Where(e=>e.Happen_date>DateTime.Now)
+                .ToList();
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+        }
+        /// <summary>
+        /// Получение всех публичных Events
+        /// </summary>
+        /// <returns></returns>
+        public List<Event> GetAllEvents()
+        {
+            try
+            {
+                return db.Events
+                    .Where(ev=>ev.Happen_date>DateTime.Now)
+                    .ToList();
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+        }
+        /// <summary>
+        ///  Получение всех участиков по id event'а
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <returns></returns>
+        public List<User> GetEventSubs(int eventId)
+        {
+            try
+            {
+                return db.UserEvents
+                    .Where(ue=>ue.EventId == eventId && ue.IsOwner == 0)
+                    .Join(db.Users, ue => ue.UserId, u => u.Id,
+                    (ue, u) => new User()
+                    {
+                        ChatId = u.ChatId,
+                        Id = u.ChatId,
+                        Login = u.Login,
+                        Notes = u.Notes
+                    })
+                    .ToList();
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
     }

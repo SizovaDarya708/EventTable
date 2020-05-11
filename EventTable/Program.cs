@@ -4,6 +4,7 @@ using Telegram.Bot;
 using EventTable.Helpers;
 using System.Linq;
 using EventTable.Models.Entities;
+using Telegram.Bot.Types;
 
 namespace EventTable
 {
@@ -12,8 +13,10 @@ namespace EventTable
 		private static TelegramBotClient client;
 		static void Main(string[] args)
 		{
-			var connection = DataBaseHelper.GetConnection();
-			
+			//var usr = new Models.Entities.User("login", 111);
+			//var evnt = new Event();
+			//DataBaseHelper.AddEventToUser(evnt, 111);
+			var db = new EventTable.Data.ApplicationDbContext();
 			client = Bot.Get();
 			var commands = Bot.Commands;
 

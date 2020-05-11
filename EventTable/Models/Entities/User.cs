@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using Telegram.Bot.Types;
 
@@ -10,6 +12,8 @@ namespace EventTable.Models.Entities
     /// </summary>
     public class User
     {
+        [Key, DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
         /// <summary>
         /// Уникальный Id чата пользователя с ботом
         /// </summary>
@@ -19,24 +23,6 @@ namespace EventTable.Models.Entities
         /// </summary>
         public string Login { get; set; }
 
-        public string City { get; set; }
-
-        /// <summary>
-        /// Список событий, где пользователь является участником
-        /// </summary>
-        public List<Event> Events {get; set;}
-
-        /// <summary>
-        /// Список событий, которые пользователь создал
-        /// </summary>
-        public List<Event> CreatedEvents { get; set; }
-
-        public User(Update update)
-        {
-            var message = update.Message ?? update.CallbackQuery.Message;
-            
-            ChatId = Convert.ToInt32(message.Chat.Id);
-            Login = message.From.Username;
-        }
+        public IList<Note> Notes { get; set; }
     }
 }
