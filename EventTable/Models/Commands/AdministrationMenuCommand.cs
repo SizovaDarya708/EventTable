@@ -11,7 +11,7 @@ namespace EventTable.Models.Commands
     {
         public override List<string> Name => new List<string>() { "AdministrationMenu", "Администрирование", "Я администратор" };
 
-        public override void Execute(Update update, TelegramBotClient client, Exception? e)
+        public override void Execute(Update update, TelegramBotClient client, Exception e = null)
         {
             var Message = update.Message ?? update.CallbackQuery.Message;
 

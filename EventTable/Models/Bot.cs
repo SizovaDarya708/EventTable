@@ -21,7 +21,7 @@ namespace EventTable.Models
 
         public static TelegramBotClient Get()
         {
-            var proxy = new HttpToSocks5Proxy("207.97.174.134", 1080);
+            var proxy = new HttpToSocks5Proxy("54.38.195.161", 37683);
             client = new TelegramBotClient(AppSettings.Key, proxy);
 
             commandsList = new List<Command>();
@@ -32,6 +32,7 @@ namespace EventTable.Models
             commandsList.Add(new DescriptionCommand());
             commandsList.Add(new ErrorMessageComand());
             commandsList.Add(new AdministrationMenuCommand());
+            commandsList.Add(new RecordNewEvent());
 
 
             //TODO: Add more commands

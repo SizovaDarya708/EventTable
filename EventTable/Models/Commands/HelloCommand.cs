@@ -13,7 +13,7 @@ namespace EventTable.Models.Commands
         //способы обращения пользователю к боту для вызова функции
         public override List<string> Name => new List<string>() {"Hello", "hello", "Привет" };
         //Для выолнения не забудь зарегистрировать свой класс в Bot.cs
-        public override void Execute(Update update, TelegramBotClient client, Exception? e)
+        public override void Execute(Update update, TelegramBotClient client, Exception e = null)
         {
             var chatId = update.Message.Chat.Id;
 

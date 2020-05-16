@@ -12,7 +12,7 @@ namespace EventTable.Models.Commands
     class ErrorMessageComand : Command
     {
         public override List<string> Name => new List<string>() { "Error" };
-        public override void Execute(Update update, TelegramBotClient client, Exception? e)
+        public override void Execute(Update update, TelegramBotClient client, Exception e = null)
         {
             var Message = update.Message ?? update.CallbackQuery.Message;
 

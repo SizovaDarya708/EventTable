@@ -11,16 +11,16 @@ namespace EventTable.Models.Commands
     {
         public override List<string> Name => new List<string>() { "CreateEvent", "Создай новое событие", "создай новое событие" };
 
-        public override void Execute(Update update, TelegramBotClient client, Exception? e)
+        public override void Execute(Update update, TelegramBotClient client, Exception e = null)
         {
             var Message = update.Message ?? update.CallbackQuery.Message;
 
-            client.SendTextMessageAsync(Message.Chat.Id, "Ну давай создадим новое событие", ParseMode.Html, false, false, 0);
+           // client.SendTextMessageAsync(Message.Chat.Id, "Ну давай создадим новое событие", ParseMode.Html, false, false, 0);
 
-            client.SendTextMessageAsync(Message.Chat.Id, "Через двойной пробел укажите название мероприятия, " +
+            client.SendTextMessageAsync(Message.Chat.Id, "Начните сообщение со слов: \"Новое событие\" Через двойной пробел укажите название мероприятия, " +
                 "дату (в формате ДД.ММ.ГГ), описание, место проведения. \n Вот шаблон:\n " +
-                "Новый год!  01.01.21  ноовый год к нам мчится, скоооро...  ул.Добрый вечер",
-                parseMode: default, false, false, 0);
+                "Новое событие  Новый год!  01.01.21  ноовый год к нам мчится, скоооро...  ул.Добрый вечер",
+               parseMode: default, false, false, 0);
         }
     }
 }

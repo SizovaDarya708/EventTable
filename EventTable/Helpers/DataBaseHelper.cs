@@ -86,6 +86,9 @@ namespace EventTable.Helpers
             {
                 var user = this.GetUser(chatId);
                 //если нет ивента, то создатель - владелец
+                //тут ошибка в этой строчке, не пойму из-за чего, пишет 
+                //The key value at position 0 of the call to 'DbSet<Event>.Find' 
+                //was of type 'Event', which does not match the property type of 'int'.
                 if (this.db.Find<Event>(@event) == null)
                 {
                     this.db.Add<Event>(@event);

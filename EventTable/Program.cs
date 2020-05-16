@@ -5,6 +5,7 @@ using EventTable.Helpers;
 using System.Linq;
 using EventTable.Models.Entities;
 using Telegram.Bot.Types;
+using EventTable.Models.Commands;
 
 namespace EventTable
 {
@@ -29,13 +30,26 @@ namespace EventTable
 				//Перебор полученных обновлений
 				foreach (var update in updates)
 				{
-					//if(тут проверка, что пользователя нет в бд)	
-					//{
-					//	User user = new User(update);
-					//	DataBaseHelper.AddUser(user);
-					//}
+					DataBaseHelper helper = new DataBaseHelper();
+					if (update.CallbackQuery?.Data == "/start" || update.Message?.Text == "/start") {
+						try
+						{
+							if (!helper.UserExist(update.Message.From.Id))
+							{
+								helper.AddUser(new Models.Entities.User()
+								{
+									ChatId = update.Message.From.Id,
+									Login = update.Message.From.Username
+								});
+							}
+						}
+						catch (Exception exc) { throw new Exception(exc.Message); }
+
+					}
 
 					var userCommand = update.CallbackQuery?.Data ?? update.Message?.Text;
+
+					if (userCommand.StartsWith("Новое событие")) new RecordNewEvent().Execute(update, client);
 
 					foreach (var command in commands)
 					{
