@@ -33,6 +33,8 @@ namespace EventTable.Models
             commandsList.Add(new ErrorMessageComand());
             commandsList.Add(new AdministrationMenuCommand());
             commandsList.Add(new RecordNewEvent());
+            commandsList.Add(new EventListCommand());
+            commandsList.Add(new GetEventCommand());
 
 
             //TODO: Add more commands

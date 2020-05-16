@@ -25,6 +25,7 @@ namespace EventTable.Services
                 Id = update.Message.MessageId,
                 Name = evAr[1],
                 Happen_date = MyDateTime,
+                Notify_date = MyDateTime.AddDays(-1),
                 Description = evAr[3],
                 Place = evAr[4]              
             };        

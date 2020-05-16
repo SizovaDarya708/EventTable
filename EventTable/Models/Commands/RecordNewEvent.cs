@@ -21,9 +21,9 @@ namespace EventTable.Models.Commands
                 var Event = ParserMessageService.ParseMessageToNewEvent(update);
                 // Добавление события в БД
                 DataBaseHelper db = new DataBaseHelper();
-                db.AddEvent(Event, update.Message.From.Id);
+                db.AddEvent(Event, chatId);
 
-                client.SendTextMessageAsync(chatId, "Событие ", parseMode: default, false, false, 0);
+                client.SendTextMessageAsync(chatId, $"Ваше событие {Event.Name} сохранено и опубликовано!", parseMode: default, false, false, 0);
             }
             catch(Exception exc) 
             {

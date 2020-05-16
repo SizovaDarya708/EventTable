@@ -50,21 +50,19 @@ namespace EventTable
 					var userCommand = update.CallbackQuery?.Data ?? update.Message?.Text;
 
 					if (userCommand.StartsWith("Новое событие")) new RecordNewEvent().Execute(update, client);
-
+					if (Int32.TryParse(update.CallbackQuery?.Data, out int number)) new GetEventCommand().Execute(update, client);
+					if (userCommand.StartsWith("SignUp")) new SignUpToEventCommand().Execute(update, client);
+					
 					foreach (var command in commands)
 					{
 						//Здесь идет сопоставление пришедших комманд с существующими 
-						//Происходит их выполнение
+						//Происходит их выполнениe
 						try
 						{
 							if (command.Name.Contains(userCommand))
 							{
 								command.Execute(update, client);
 								break;
-							}
-							else if (update.Message != null && command.Name.Contains("Описание"))
-							{
-								command.Execute(update, client);
 							}
 						}
 						catch (Exception e)

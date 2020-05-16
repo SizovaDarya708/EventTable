@@ -47,7 +47,7 @@ namespace EventTable.Helpers
         /// </summary>
         /// <param name="chatId"></param>
         /// <returns></returns>
-        public User GetUser(int chatId)
+        public User GetUser(long chatId)
         {
             try
             {
@@ -80,7 +80,7 @@ namespace EventTable.Helpers
         /// </summary>
         /// <param name="event"></param>
         /// <param name="chatId"></param>
-        public void AddEvent(Event @event, int chatId)
+        public void AddEvent(Event @event, long chatId)
         {
             try
             {
@@ -89,7 +89,7 @@ namespace EventTable.Helpers
                 //тут ошибка в этой строчке, не пойму из-за чего, пишет 
                 //The key value at position 0 of the call to 'DbSet<Event>.Find' 
                 //was of type 'Event', which does not match the property type of 'int'.
-                if (this.db.Find<Event>(@event) == null)
+                if (this.db.Events.Where(x => x.Id == @event.Id).FirstOrDefault() == null)
                 {
                     this.db.Add<Event>(@event);
                     this.db.Add<UserEvents>(new UserEvents() 
