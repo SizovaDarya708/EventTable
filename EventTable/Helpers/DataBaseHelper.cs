@@ -86,9 +86,6 @@ namespace EventTable.Helpers
             {
                 var user = this.GetUser(chatId);
                 //если нет ивента, то создатель - владелец
-                //тут ошибка в этой строчке, не пойму из-за чего, пишет 
-                //The key value at position 0 of the call to 'DbSet<Event>.Find' 
-                //was of type 'Event', which does not match the property type of 'int'.
                 if (this.db.Events.Where(x => x.Id == @event.Id).FirstOrDefault() == null)
                 {
                     this.db.Add<Event>(@event);
@@ -113,6 +110,36 @@ namespace EventTable.Helpers
             catch(Exception e)
             {
                 throw e; 
+            }
+        }
+        /// <summary>
+        /// Удаление события
+        /// </summary>
+        /// <param name="event"></param>
+        /// <param name="chatId"></param>
+        public void RemoveEvent(Event @event, long chatId)
+        {
+            try
+            {
+                var user = this.GetUser(chatId);
+                var userEvent = this.db.UserEvents.Where(ue => ue.EventId == @event.Id && ue.UserId == user.Id).FirstOrDefault();
+                //если удаляет владелец, то событие удаляется абсолютно у всех, а потом и само событие,
+                //Иначе удалятся запись пользователя на событие 
+                if (userEvent.IsOwner == 1)
+                {
+                    var events = this.db.UserEvents.Where(ue => ue.EventId == @event.Id).ToList();
+                    this.db.UserEvents.RemoveRange(events);
+                    this.db.Events.Remove(@event);
+                }
+                else
+                {
+                    this.db.UserEvents.Remove(userEvent);
+                }
+                this.db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
         /// <summary>
