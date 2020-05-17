@@ -63,7 +63,7 @@ namespace EventTable.Helpers
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public bool UserExist(int chatId)
+        public bool UserExist(long chatId)
         {
             try
             {

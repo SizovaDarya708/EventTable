@@ -21,7 +21,7 @@ namespace EventTable.Models.Commands
 
             if (eventList.Count != 0)
             {
-                var events = InlineKeyBoardHelper.CreateInlineKeyboardButtonForMyEvents(eventList, eventList.Count / 10);
+                var events = InlineKeyBoardHelper.CreateInlineKeyboardButtonForEditMyEvents(eventList, eventList.Count / 10);
 
                 client.SendTextMessageAsync(Message.Chat.Id, "Список событий, которые вы создали", parseMode: default, false, false, 0, events);
             }

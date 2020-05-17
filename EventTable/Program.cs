@@ -14,9 +14,7 @@ namespace EventTable
 		private static TelegramBotClient client;
 		static void Main(string[] args)
 		{
-			//var usr = new Models.Entities.User("login", 111);
-			//var evnt = new Event();
-			//DataBaseHelper.AddEventToUser(evnt, 111);
+
 			var db = new EventTable.Data.ApplicationDbContext();
 			client = Bot.Get();
 			var commands = Bot.Commands;
@@ -51,6 +49,7 @@ namespace EventTable
 
 					if (userCommand.StartsWith("Новое событие")) new RecordNewEvent().Execute(update, client);
 					if (userCommand.StartsWith("MyEvents")) new GetEventCommand().Execute(update, client);
+					//if (userCommand.StartsWith("EditMyEvents")) new ().Execute(update, client);
 					if (Int32.TryParse(update.CallbackQuery?.Data, out int number)) new GetEventCommand().Execute(update, client);
 					if (userCommand.StartsWith("SignUp")) new SignUpToEventCommand().Execute(update, client);
 					

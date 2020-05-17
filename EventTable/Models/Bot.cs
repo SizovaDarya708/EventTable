@@ -39,6 +39,7 @@ namespace EventTable.Models
             commandsList.Add(new GetEventCommand());
             commandsList.Add(new FutureEventsCommand());
             commandsList.Add(new GetMyEventCommand());
+            commandsList.Add(new MyEventListCommand());
 
 
             //TODO: Add more commands
