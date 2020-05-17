@@ -22,6 +22,7 @@ namespace EventTable.Models.Commands
                             {
                                 new[] {InlineKeyboardButton.WithCallbackData("Список событий","EventList") },
                                 new[] {InlineKeyboardButton.WithCallbackData("Создание событий","CreateEvent") },
+                                new[] {InlineKeyboardButton.WithCallbackData("Предстоящие события","FutureEvents") },
                                 new[] {InlineKeyboardButton.WithCallbackData("Администрирование событий", "AdministrationMenu") }
                             });
 

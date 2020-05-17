@@ -50,6 +50,7 @@ namespace EventTable
 					var userCommand = update.CallbackQuery?.Data ?? update.Message?.Text;
 
 					if (userCommand.StartsWith("Новое событие")) new RecordNewEvent().Execute(update, client);
+					if (userCommand.StartsWith("MyEvents")) new GetEventCommand().Execute(update, client);
 					if (Int32.TryParse(update.CallbackQuery?.Data, out int number)) new GetEventCommand().Execute(update, client);
 					if (userCommand.StartsWith("SignUp")) new SignUpToEventCommand().Execute(update, client);
 					

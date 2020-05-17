@@ -121,7 +121,7 @@ namespace EventTable.Helpers
         /// <param name="chatId"></param>
         /// <param name="isOwner"></param>
         /// <returns></returns>
-        public List<Event> GetUserEvents(int chatId, int isOwner)
+        public List<Event> GetUserEvents(long chatId, int isOwner)
         {
             try
             {
