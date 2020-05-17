@@ -2,13 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace EventTable.Models.Commands
 {
+    /// <summary>
+    /// Вывод описания определенного события
+    /// </summary>
     class GetEventCommand : Command
     {
         public override List<string> Name => new List<string>() { "Определенное событие" };

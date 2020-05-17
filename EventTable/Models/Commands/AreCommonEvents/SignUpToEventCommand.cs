@@ -2,12 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 
 namespace EventTable.Models.Commands
 {
+    /// <summary>
+    /// Подписаться на событие
+    /// </summary>
     class SignUpToEventCommand : Command
     {
         public override List<string> Name => new List<string>() { "SignUp" };
@@ -28,9 +30,8 @@ namespace EventTable.Models.Commands
             }
             catch(Exception exc)
             {
-                client.SendTextMessageAsync(Message.Chat.Id, $"Вы не можете записаться на свое событие!", parseMode: default, false, false, 0);
+                client.SendTextMessageAsync(Message.Chat.Id, $"Вы уже записаны на это событие!", parseMode: default, false, false, 0);
             }
-
         }
     }
 }

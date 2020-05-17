@@ -1,9 +1,6 @@
 ﻿using EventTable.Models.Commands;
 using MihaZupan;
-using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using Telegram.Bot;
 
 namespace EventTable.Models
@@ -21,9 +18,9 @@ namespace EventTable.Models
 
         public static TelegramBotClient Get()
         {
-            //var proxy = new HttpToSocks5Proxy("54.38.195.161", 37683);
-            var proxy = new HttpToSocks5Proxy("54.38.195.161", 52060);
-            
+            //var proxy = new HttpToSocks5Proxy("62.210.92.188", 5950);
+            //var proxy = new HttpToSocks5Proxy("54.38.195.161", 52060);
+            var proxy = new HttpToSocks5Proxy("54.38.195.161", 63525);
             client = new TelegramBotClient(AppSettings.Key, proxy);
 
             commandsList = new List<Command>();
@@ -34,7 +31,7 @@ namespace EventTable.Models
             commandsList.Add(new DescriptionCommand());
             commandsList.Add(new ErrorMessageComand());
             commandsList.Add(new AdministrationMenuCommand());
-            commandsList.Add(new RecordNewEvent());
+            commandsList.Add(new RecordNewEventCommand());
             commandsList.Add(new EventListCommand());
             commandsList.Add(new GetEventCommand());
             commandsList.Add(new FutureEventsCommand());

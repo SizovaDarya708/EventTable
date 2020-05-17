@@ -7,6 +7,9 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace EventTable.Models.Commands
 {
+    /// <summary>
+    /// Все события, на которые записался пользователь
+    /// </summary>
     class FutureEventsCommand : Command
     {
         public override List<string> Name => new List<string>() { "Будущие событий", "FutureEvents"};
@@ -20,7 +23,7 @@ namespace EventTable.Models.Commands
 
             if (eventList.Count != 0)
             {
-                var events = InlineKeyBoardHelper.CreateInlineKeyboardButtonForMyEvents(eventList, eventList.Count / 10);
+                var events = InlineKeyBoardHelper.CreateInlineKeyboardButtonForFutureEvents(eventList, eventList.Count / 10);
 
                 client.SendTextMessageAsync(Message.Chat.Id, "Список событий, на которые вы записаны:", parseMode: default, false, false, 0, events);
             }

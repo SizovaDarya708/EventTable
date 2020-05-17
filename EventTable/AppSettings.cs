@@ -12,7 +12,7 @@ namespace EventTable
 
         public static string Key { get; set; } = "1054347333:AAHsNZrggwnqFPV3vmgi1exYxMd5hMsuEH4";
 
-        public static string DBConnection { get; } = "Database=event_table;Host=localhost;Username=postgres;Password=GA%MpL6w;Persist Security Info=True";
+        public static string DBConnection { get; } = "Database=event_table;Host=localhost;Username=postgres;Password=;Persist Security Info=True";
 
     }
 }

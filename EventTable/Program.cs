@@ -3,8 +3,6 @@ using System;
 using Telegram.Bot;
 using EventTable.Helpers;
 using System.Linq;
-using EventTable.Models.Entities;
-using Telegram.Bot.Types;
 using EventTable.Models.Commands;
 
 namespace EventTable
@@ -32,6 +30,7 @@ namespace EventTable
 					if (update.CallbackQuery?.Data == "/start" || update.Message?.Text == "/start") {
 						try
 						{
+							new DescriptionCommand().Execute(update, client);
 							if (!helper.UserExist(update.Message.From.Id))
 							{
 								helper.AddUser(new Models.Entities.User()
@@ -42,17 +41,20 @@ namespace EventTable
 							}
 						}
 						catch (Exception exc) { throw new Exception(exc.Message); }
-
 					}
 
 					var userCommand = update.CallbackQuery?.Data ?? update.Message?.Text;
 
-					if (userCommand.StartsWith("Новое событие")) new RecordNewEvent().Execute(update, client);
+					if (userCommand.StartsWith("Новое событие")) new RecordNewEventCommand().Execute(update, client);
+					if (userCommand.StartsWith("SignOut")) new SignOutEventCommand().Execute(update, client);
+					if (userCommand.StartsWith("GetMyEvent")) new GetMyEventCommand().Execute(update, client);
 					if (userCommand.StartsWith("MyEvents")) new GetEventCommand().Execute(update, client);
-					//if (userCommand.StartsWith("EditMyEvents")) new ().Execute(update, client);
+					if (userCommand.StartsWith("GetFutureEvents")) new GetFutureEventCommand().Execute(update, client);
+					if (userCommand.StartsWith("DeleteEvent")) new DeleteEventCommand().Execute(update, client);
 					if (Int32.TryParse(update.CallbackQuery?.Data, out int number)) new GetEventCommand().Execute(update, client);
 					if (userCommand.StartsWith("SignUp")) new SignUpToEventCommand().Execute(update, client);
-					
+					if (userCommand.StartsWith("EventSubs")) new GetEventSubscribersCommand().Execute(update, client);
+
 					foreach (var command in commands)
 					{
 						//Здесь идет сопоставление пришедших комманд с существующими 

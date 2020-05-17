@@ -6,6 +6,9 @@ using Telegram.Bot.Types;
 
 namespace EventTable.Models.Commands
 {
+    /// <summary>
+    /// Вывод всех событий
+    /// </summary>
     class EventListCommand : Command
     {
         public override List<string> Name => new List<string>() { "EventList", "Список событий", "Все события" };

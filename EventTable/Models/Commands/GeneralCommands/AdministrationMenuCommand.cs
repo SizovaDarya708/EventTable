@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace EventTable.Models.Commands
 {
+    /// <summary>
+    /// Вывод меню с кнопками управления
+    /// </summary>
     class AdministrationMenuCommand : Command
     {
         public override List<string> Name => new List<string>() { "AdministrationMenu", "Администрирование", "Я администратор" };

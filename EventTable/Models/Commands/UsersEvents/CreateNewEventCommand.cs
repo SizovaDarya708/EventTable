@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Telegram.Bot;
 using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
 
 namespace EventTable.Models.Commands
 {
+    /// <summary>
+    /// Вызов описания к созданию нового события
+    /// </summary>
     public class CreateNewEventCommand : Command
     {
         public override List<string> Name => new List<string>() { "CreateEvent", "Создай новое событие", "создай новое событие" };

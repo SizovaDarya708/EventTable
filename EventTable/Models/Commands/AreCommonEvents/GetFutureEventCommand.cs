@@ -2,16 +2,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace EventTable.Models.Commands
 {
-    class GetMyEventCommand : Command
-    {
-        public override List<string> Name => new List<string>() { "GetMyEvent", "Мои события", "Созданные мной события" };
+    /// <summary>
+    /// Вывод определенного предстоящего события, на которое подписался пользователь
+    /// </summary>
+    class GetFutureEventCommand : Command
+    {        
+        public override List<string> Name => new List<string>() { "Определенное будущее событие" };
 
         public override void Execute(Update update, TelegramBotClient client, Exception e = null)
         {
@@ -20,12 +22,12 @@ namespace EventTable.Models.Commands
             DataBaseHelper db = new DataBaseHelper();
             var events = db.GetAllEvents();
 
-            var currentEvent = events.Where(x => x.Id == Convert.ToInt32(update.CallbackQuery.Data)).FirstOrDefault();
+            var eventId = update.CallbackQuery.Data.Split(":")[1];
+            var currentEvent = events.Where(x => x.Id == Convert.ToInt32(eventId)).FirstOrDefault();
 
             var adm = new InlineKeyboardMarkup(new[]
                             {
-                                new[] {InlineKeyboardButton.WithCallbackData("Просмотреть записавшихся", $"EventSubs:{update.CallbackQuery.Data}") },
-                                 new[] {InlineKeyboardButton.WithCallbackData("Удалить событие", $"DeleteMyEvent:{update.CallbackQuery.Data}") }
+                                 new[] {InlineKeyboardButton.WithCallbackData("Отписаться от события", $"SignOut:{update.CallbackQuery.Data}") }
                             });
 
             client.SendTextMessageAsync(Message.Chat.Id, $"Название: {currentEvent.Name}\nОписание: {currentEvent.Description}" +

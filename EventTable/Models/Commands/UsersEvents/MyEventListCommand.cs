@@ -1,13 +1,15 @@
 ﻿using EventTable.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace EventTable.Models.Commands
 {
+    /// <summary>
+    /// Вывод списка событий пользователя
+    /// </summary>
     class MyEventListCommand : Command
     {
         public override List<string> Name => new List<string>() { "MyEventList", "Мои события", "Созданные мной события" };

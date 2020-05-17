@@ -8,7 +8,10 @@ using Telegram.Bot.Types;
 
 namespace EventTable.Models.Commands
 {
-    class RecordNewEvent : Command
+    /// <summary>
+    /// Добавление нового события в бд
+    /// </summary>
+    class RecordNewEventCommand : Command
     {
         public override List<string> Name => new List<string>() { "Запись события в бд", "Новое событие" };
         public override void Execute(Update update, TelegramBotClient client, Exception e = null)

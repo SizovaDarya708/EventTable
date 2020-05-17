@@ -123,8 +123,9 @@ namespace EventTable.Helpers
             {
                 var user = this.GetUser(chatId);
                 var userEvent = this.db.UserEvents.Where(ue => ue.EventId == @event.Id && ue.UserId == user.Id).FirstOrDefault();
+
                 //если удаляет владелец, то событие удаляется абсолютно у всех, а потом и само событие,
-                //Иначе удалятся запись пользователя на событие 
+                //Иначе удалятся запись пользователя на событие
                 if (userEvent.IsOwner == 1)
                 {
                     var events = this.db.UserEvents.Where(ue => ue.EventId == @event.Id).ToList();
